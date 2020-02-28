@@ -22,9 +22,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const app = (0, _express.default)();
 app.use((0, _cors.default)());
 app.use(_bodyParser.default.json());
-const PORT = process.env.PORT || 3333; //Api Routes
+const PORT = process.env.PORT || 3636; //Api Routes
 
 app.use('/api/v1', _routers.PublicRouter);
+app.use('/api/v1/employee', _routers.EmployeeRouter);
 
 function startApp() {
   try {

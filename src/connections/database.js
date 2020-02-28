@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
-
+import 'dotenv/config';
 function connect() {
-  const url = 'mongodb://localhost:27017/dc_dev';
+  const host = process.env.DB_HOST;
+  const db = process.env.DB_NAME;
+  const url = `${host}/${db}`;
   mongoose.connect(
     url,
     { useNewUrlParser: true, useUnifiedTopology: true },
