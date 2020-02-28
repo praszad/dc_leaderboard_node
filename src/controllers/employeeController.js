@@ -12,8 +12,7 @@ export async function fetchAllEmployees(req, res) {
         return;
       }
       const response = await Employee.find({});
-
-      res.send({ response });
+      res.send(response);
     }
   } catch (error) {
     res.send(error);
