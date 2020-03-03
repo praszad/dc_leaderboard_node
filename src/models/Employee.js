@@ -1,16 +1,19 @@
 import mongoose from 'mongoose';
 const EmployeeDetailSchema = mongoose.Schema({
+  role: {
+    required: true,
+    type: String
+  },
+  date_of_joining: {
+    type: String
+  },
+  position: {
+    type: String
+  },
   points: {
     type: String
   },
   age: {
-    type: String
-  },
-  years_of_experience: {
-    required: true,
-    type: String
-  },
-  position: {
     type: String
   }
 });
