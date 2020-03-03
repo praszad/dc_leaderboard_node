@@ -1,21 +1,30 @@
 import mongoose from 'mongoose';
 
 const UserSchema = mongoose.Schema({
-  name: {
+  emp_id: {
     type: String,
     required: true
   },
-  email: {
+  emp_name: {
     type: String,
     required: true
   },
   mobile: {
-    type: String,
-    required: true
+    type: String
+  },
+  role_id: {
+    required: true,
+    type: String
+  },
+  date_of_joining: {
+    required: true,
+    type: String
+  },
+  position: {
+    type: String
   },
   password: {
-    type: String,
-    required: true
+    type: String
   }
 });
 const User = mongoose.model('users', UserSchema);
