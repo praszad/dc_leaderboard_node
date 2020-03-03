@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 const jwtSecretKey = process.env.JWT_TOKEN_KEY;
 export async function loginValidation(req, res) {
   try {
-    const { email, password } = req.body;
-    let userObject = await User.find({ email });
+    const { user_id, password } = req.body;
+    let userObject = await User.find({ emp_id: user_id });
     if (userObject.length) {
       const isPasswordValid = await bcrypt.compare(
         password,
@@ -47,15 +47,5 @@ async function refreshToken(data) {
     return await jwt.sign({ data }, jwtSecretKey, { expiresIn: '1d' });
   } catch (error) {
     return 'Error Parsing String In JWT';
-  }
-}
-export async function addTestUser(req, res) {
-  try {
-    const userObject = req.body;
-    userObject.password = await bcrypt.hash(req.body.password, 10);
-    const response = await User.create(userObject);
-    res.send(response);
-  } catch (error) {
-    res.send(error);
   }
 }
