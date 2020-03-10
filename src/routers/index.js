@@ -1,3 +1,4 @@
 import PublicRouter from './PublicRoutes';
 import EmployeeRouter from './EmployeeRoutes';
-module.exports = { PublicRouter, EmployeeRouter };
+import CategoryRouter from './categoryRoutes';
+module.exports = { PublicRouter, EmployeeRouter, CategoryRouter };

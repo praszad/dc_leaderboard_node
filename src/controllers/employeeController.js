@@ -1,4 +1,3 @@
-import Employee from '../models/Employee';
 import { verifyToken } from './publicController';
 import User from '../models/User';
 import bcrypt from 'bcrypt';
@@ -13,7 +12,7 @@ export async function fetchAllEmployees(req, res) {
         res.send({ Error: tokenData.error });
         return;
       }
-      const response = await Employee.find({});
+      const response = await User.find({});
       res.send(response);
     }
   } catch (error) {
@@ -45,6 +44,43 @@ export async function addNewUser(req, res) {
       res.send('Your Not Auth To Create Users');
     } else {
       res.send('Invalid Header With Authorization');
+    }
+  } catch (error) {
+    res.send(error);
+  }
+}
+
+export async function editNewUser(req, res) {
+  try {
+    const token = req.headers?.authorization;
+    if (token) {
+      const tokenData = await verifyToken(token);
+      if (tokenData.error) {
+        res.send({ Error: tokenData.error });
+        return;
+      }
+      let userObject = req.body;
+      let userDbObject = await User.find({ emp_id: userObject.user_id });
+      const isPasswordValid = await bcrypt.compare(
+        userObject.password,
+        userDbObject[0].password
+      );
+      if (isPasswordValid) {
+        userDbObject[0].password = await bcrypt.hash(
+          userObject.newPassword,
+          10
+        );
+        const response = await User.updateOne(
+          { emp_id: userObject.user_id },
+          userDbObject[0]
+        );
+        res.send({
+          response
+        });
+        return;
+      } else {
+        res.send('Invalid Password or Query');
+      }
     }
   } catch (error) {
     res.send(error);
