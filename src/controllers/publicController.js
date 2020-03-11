@@ -15,14 +15,17 @@ export async function loginValidation(req, res) {
         userObject[0].password = '';
         const token = await newToken(userObject[0]);
         const refToken = await refreshToken(userObject[0]);
-        res.send({
+
+        res.status(200).send({
           token,
           refreshToken: refToken
         });
         return;
       } else {
-        res.send('Invalid Password');
+        res.status(204).send('Invalid Password');
       }
+    } else {
+      res.status(304).send('Invalid Username Or Password');
     }
   } catch (error) {
     res.send(error);
