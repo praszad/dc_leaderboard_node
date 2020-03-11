@@ -21,7 +21,6 @@ export async function addNewCategoryItem(req, res) {
         let lastCategoryItem = await CategoryItem.find({})
           .sort({ itemId: -1 })
           .limit(1);
-
         let lastCategoryItemNum = '';
         if (lastCategoryItem.length) {
           lastCategoryItemNum = lastCategoryItem[0].itemId.split('_');
@@ -35,7 +34,7 @@ export async function addNewCategoryItem(req, res) {
         const response = await CategoryItem.create(categoryItemObject);
         res.send(response);
       } else {
-        res.send('Invalid Category Id');
+        res.send('Invalid Category Id or Object');
       }
     }
   } catch (error) {
