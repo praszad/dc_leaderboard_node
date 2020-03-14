@@ -1,6 +1,7 @@
 import User from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Transaction from '../models/Transactions';
 const jwtSecretKey = process.env.JWT_TOKEN_KEY;
 export async function loginValidation(req, res) {
   try {
@@ -14,10 +15,17 @@ export async function loginValidation(req, res) {
       if (isPasswordValid) {
         userObject[0].password = '';
         const token = await newToken(userObject[0]);
+        let user = userObject[0];
         const refToken = await refreshToken(userObject[0]);
-
+        const karmaPointsData = await Transaction.find({ emp_id: user_id });
+        var karmaPoints = 0;
+        for (const karma of karmaPointsData) {
+          karmaPoints += parseInt(karma.karmaPoints ? karma.karmaPoints : 0);
+        }
+        user.karmaPoints = karmaPoints;
         res.status(200).send({
           token,
+          userData: user,
           refreshToken: refToken
         });
         return;
