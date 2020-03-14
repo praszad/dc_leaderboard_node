@@ -3,11 +3,13 @@ import {
   fetchAllCategories,
   addNewCategory,
   editCategory,
-  addNewCategoryItem
+  addNewCategoryItem,
+  getCategoryItems
 } from '../controllers/categoryController';
 const router = express.Router();
 
 router.get('/', fetchAllCategories);
+router.post('/getItems', getCategoryItems);
 router.post('/', addNewCategory);
 router.put('/', editCategory);
 
