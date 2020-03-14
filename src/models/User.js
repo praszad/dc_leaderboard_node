@@ -23,6 +23,9 @@ const UserSchema = mongoose.Schema({
   position: {
     type: String
   },
+  karmaPoints: {
+    type: String
+  },
   password: {
     type: String
   }

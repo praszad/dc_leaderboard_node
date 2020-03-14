@@ -3,7 +3,12 @@ import 'dotenv/config';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import connect from './connections/database';
-import { PublicRouter, EmployeeRouter, CategoryRouter } from './routers';
+import {
+  PublicRouter,
+  EmployeeRouter,
+  CategoryRouter,
+  TransactionRouter
+} from './routers';
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,6 +18,7 @@ const PORT = process.env.PORT || 3636;
 app.use('/api/v1', PublicRouter);
 app.use('/api/v1/employee', EmployeeRouter);
 app.use('/api/v1/category', CategoryRouter);
+app.use('/api/v1/transaction', TransactionRouter);
 function startApp() {
   try {
     app.listen(PORT, () => {
